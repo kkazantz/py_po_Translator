@@ -30,20 +30,20 @@ for line in lines:
     # Identify msgctxt lines
     if line.startswith("msgctxt"):
         current_msgctxt = line
-        
+
     # Identify msgid lines
     elif line.startswith("msgid"):
         current_msgid = line.split('"')[1]
-        
+
     # Identify msgstr lines and translate msgid
     elif line.startswith("msgstr") and line == 'msgstr ""':
-        translated_text = translate_to_greek(current_msgid)
-        line = f'msgstr "{translated_text}"'
-
         # If msgctxt exists, include it in the modified lines
         if current_msgctxt:
             modified_lines.append(current_msgctxt)
             current_msgctxt = None  # Reset msgctxt
+
+        translated_text = translate_to_greek(current_msgid)
+        line = f'msgstr "{translated_text}"'
 
     # Add the (possibly modified) line to the new list
     modified_lines.append(line)
