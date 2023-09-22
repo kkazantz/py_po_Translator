@@ -7,7 +7,11 @@ translator = Translator()
 def translate_to_greek(text):
     try:
         translation = translator.translate(text, dest='el')
-        return translation.text
+        if translation and translation.text:
+            return translation.text
+        else:
+            print(f"Translation returned None for text: '{text}', Original Text: '{text}'")
+            return ""
     except Exception as e:
         print(f"Translation failed: {e}")
         return str(e)
